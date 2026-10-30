@@ -68,17 +68,16 @@ function showToast(message, isError = false) {
 
 function configureRoleAccess(role) {
   const canAnalyze = role === "admin_bpjs";
-  document.querySelector(".manual-form-section").classList.toggle("is-hidden", !canAnalyze);
-  document.getElementById("batchNavItem").classList.toggle("is-hidden", !canAnalyze);
-  document.getElementById("batchTab").classList.toggle("is-hidden", !canAnalyze);
-  document.getElementById("facilityNavItem").classList.toggle("is-hidden", !canAnalyze);
-  document.getElementById("facilitiesTab").classList.toggle("is-hidden", !canAnalyze);
+  document.querySelector(".manual-form-section")?.classList.toggle("is-hidden", !canAnalyze);
+  document.querySelector(".batch-dashboard-section")?.classList.toggle("is-hidden", !canAnalyze);
+  document.getElementById("batchNavItem")?.classList.toggle("is-hidden", !canAnalyze);
+  document.getElementById("batchTab")?.classList.toggle("is-hidden", !canAnalyze);
+  document.getElementById("facilityNavItem")?.classList.toggle("is-hidden", !canAnalyze);
+  document.getElementById("facilitiesTab")?.classList.toggle("is-hidden", !canAnalyze);
   const restrictedControls = [
-    ...document.querySelectorAll("#manualFormCollapse input, #manualFormCollapse select, #manualFormCollapse button"),
-    document.getElementById("toggleManualFormBtn"),
     document.getElementById("batchAuditBtn"),
     ...document.querySelectorAll("#batchAuditForm input, #batchAuditForm button, [data-batch-size]"),
-  ];
+  ].filter(Boolean);
   restrictedControls.forEach((control) => {
     control.disabled = !canAnalyze;
     control.classList.toggle("is-hidden", !canAnalyze);
@@ -504,12 +503,12 @@ function bindFilters() {
       document.querySelectorAll("[data-batch-size]").forEach((item) => item.classList.toggle("is-active", item === chip));
     });
   });
-  document.getElementById("toggleManualFormBtn").addEventListener("click", (event) => {
+  document.getElementById("toggleManualFormBtn")?.addEventListener("click", (event) => {
     const button = event.currentTarget;
     const expanded = button.getAttribute("aria-expanded") !== "true";
     button.setAttribute("aria-expanded", String(expanded));
-    document.getElementById("manualFormCollapse").classList.toggle("is-open", expanded);
-    document.getElementById("manualFormCollapse").setAttribute("aria-hidden", String(!expanded));
+    document.getElementById("manualFormCollapse")?.classList.toggle("is-open", expanded);
+    document.getElementById("manualFormCollapse")?.setAttribute("aria-hidden", String(!expanded));
   });
   document.getElementById("refreshAuditButton").addEventListener("click", loadAuditHistory);
   document.getElementById("refreshAnalyticsBtn")?.addEventListener("click", loadReportData);
@@ -548,7 +547,7 @@ function bindFilters() {
       applyAnalyticsFilter();
     });
   });
-  document.getElementById("claimForm").addEventListener("submit", analyzeManualClaim);
+  document.getElementById("claimForm")?.addEventListener("submit", analyzeManualClaim);
   document.getElementById("facilityCreateForm").addEventListener("submit", submitFacilityForm);
   document.getElementById("facilityClaimPicker").addEventListener("change", updateSelectedFacilityClaims);
   document.getElementById("facilityClaimSearch").addEventListener("input", () => {

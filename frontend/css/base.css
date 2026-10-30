@@ -1090,3 +1090,83 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Integrated Batch Dashboard Styles */
+.batch-dashboard-section {
+  margin: 18px 0 20px;
+}
+.batch-dashboard-card {
+  padding: 18px 22px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-soft);
+}
+.batch-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.batch-subtitle {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.batch-performance-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.batch-mini-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.batch-mini-pill strong {
+  color: var(--text-primary);
+}
+.batch-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.batch-form-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.batch-form-inline input {
+  width: 110px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .batch-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .batch-form-inline {
+    width: 100%;
+  }
+  .batch-form-inline input {
+    flex: 1;
+  }
+}

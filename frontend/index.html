@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="css/variables.css?v=enterprise-8" />
-    <link rel="stylesheet" href="css/base.css?v=enterprise-13" />
+    <link rel="stylesheet" href="css/base.css?v=enterprise-14" />
     <link rel="stylesheet" href="css/components/buttons.css?v=enterprise-8" />
     <link rel="stylesheet" href="css/components/cards.css?v=enterprise-8" />
     <link rel="stylesheet" href="css/components/table.css?v=enterprise-8" />
@@ -71,9 +71,7 @@
           <button class="nav-item active" type="button" data-tab="dashboard" title="Dashboard" aria-label="Dashboard">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/></svg><span class="nav-label">Dashboard</span>
           </button>
-          <button class="nav-item" id="batchNavItem" type="button" data-tab="batch" title="Batch Analysis" aria-label="Batch Analysis">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="19" r="2"/></svg><span class="nav-label">Batch Analysis</span>
-          </button>
+
           <button class="nav-item" type="button" data-tab="audit" title="Audit Trail" aria-label="Audit Trail">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5m4-1v5l3 2"/></svg><span class="nav-label">Audit History</span>
           </button>
@@ -133,24 +131,42 @@
         <div class="kpi-skeleton"></div>
       </section>
 
-      <section class="manual-form-section" aria-labelledby="manualFormTitle">
-        <button class="button button-quiet btn-outline manual-form-toggle" id="toggleManualFormBtn" type="button" aria-expanded="false" aria-controls="manualFormCollapse">
-          <span class="manual-form-toggle-icon" aria-hidden="true">+</span>
-          <span id="manualFormTitle">Uji Verifikasi Klaim Manual</span>
-        </button>
-        <div class="manual-form-panel" id="manualFormCollapse" aria-hidden="true">
-          <div class="manual-form-panel-inner">
-            <p>Analisis satu klaim berdasarkan catatan klinis dan kode billing.</p>
-            <form id="claimForm" class="manual-claim-form">
-              <label>ID Klaim<input id="claimIdInput" name="claim_id" type="text" placeholder="CLM-05501" required /></label>
-              <label class="notes-field">Catatan Dokter<input id="doctorNotesInput" name="doctor_notes" type="text" placeholder="Ringkasan kondisi dan tindakan medis" required /></label>
-              <label>Kode ICD<input id="billingCodesInput" name="admin_billing_code" type="text" placeholder="A09, K52.9" required /></label>
-              <label>Lama Rawat<select id="lengthOfStayInput" name="length_of_stay"><option value="1">1 hari</option><option value="2">2 hari</option><option value="3">3 hari</option><option value="5">5 hari</option><option value="7">7 hari</option><option value="14">14 hari</option></select></label>
-              <label>Total Biaya<input id="totalChargeInput" name="total_charge" type="number" min="0" step="any" placeholder="0" required /></label>
-              <button class="button button-primary" type="submit" id="analyzeClaimBtn">Analisis Klaim</button>
-            </form>
-            <div id="manualResult" class="manual-result hidden" aria-live="polite"></div>
+      <!-- Integrated Batch Analysis in Dashboard -->
+      <section class="batch-dashboard-section" aria-labelledby="batchSectionTitle">
+        <div class="batch-dashboard-card">
+          <div class="batch-dashboard-header">
+            <div>
+              <div class="section-title-line">
+                <h3 id="batchSectionTitle">Simulasi Penapisan Massal (Batch Analysis)</h3>
+                <span class="live-label"><span></span> DUAL-ENGINE AI</span>
+              </div>
+              <p class="batch-subtitle">Tapis berkas klaim rumah sakit secara otomatis dengan kombinasi aturan baku Permenkes &amp; Machine Learning XGBoost.</p>
+            </div>
+            <div class="batch-performance-mini">
+              <span class="batch-mini-pill">⚡ Kecepatan: <strong>~900 klaim/detik (1,1 ms)</strong></span>
+              <span class="batch-mini-pill">⚖️ Regulasi: <strong>6 Dokumen Kemenkes</strong></span>
+            </div>
           </div>
+
+          <div class="batch-controls-row">
+            <div class="batch-size-chips" role="group" aria-label="Pilih volume klaim">
+              <button class="batch-size-chip is-active" type="button" data-batch-size="100">100 Klaim</button>
+              <button class="batch-size-chip" type="button" data-batch-size="500">500 Klaim</button>
+              <button class="batch-size-chip" type="button" data-batch-size="1000">1.000 Klaim</button>
+              <button class="batch-size-chip" type="button" data-batch-size="5000">5.000 Klaim</button>
+            </div>
+            <form id="batchAuditForm" class="batch-form-inline">
+              <label for="batchLimit" class="sr-only">Jumlah klaim</label>
+              <input id="batchLimit" type="number" min="1" max="5500" step="1" value="100" required title="Masukkan jumlah klaim" />
+              <button class="button button-primary" type="submit" id="batchRunButton">
+                <span class="button-icon" aria-hidden="true">◈</span>
+                <span class="button-label">Jalankan Batch</span>
+              </button>
+            </form>
+          </div>
+
+          <div class="batch-results hidden" id="batchResults" aria-live="polite"></div>
+          <div class="batch-summary hidden" id="batchSummary" aria-live="polite"></div>
         </div>
       </section>
 
@@ -206,46 +222,7 @@
       </section>
         </main>
 
-        <main class="workspace tab-panel hidden" id="batchTab">
-          <section class="page-heading"><div><p class="eyebrow">PEMROSESAN TERKENDALI</p><h2>Batch Analysis</h2><p class="page-subtitle">Jalankan pemeriksaan pada dataset klaim aktif.</p></div></section>
-          <section class="batch-layout" aria-label="Pengaturan dan parameter batch">
-            <div class="work-section batch-work-section">
-              <div class="section-heading compact-heading"><div><h2>Simulasi Batch</h2><p>Pilih volume klaim untuk menjalankan penapisan.</p></div></div>
-              <div class="batch-size-chips" role="group" aria-label="Pilih ukuran batch">
-                <button class="batch-size-chip is-active" type="button" data-batch-size="100">100 Klaim</button>
-                <button class="batch-size-chip" type="button" data-batch-size="500">500 Klaim</button>
-                <button class="batch-size-chip" type="button" data-batch-size="1000">1.000 Klaim</button>
-                <button class="batch-size-chip" type="button" data-batch-size="5000">5.000 Klaim</button>
-              </div>
-              <form id="batchAuditForm" class="batch-form">
-                <label for="batchLimit">Jumlah klaim</label><input id="batchLimit" type="number" min="1" max="5500" step="1" value="100" required />
-                <button class="button button-primary" type="submit" id="batchRunButton"><span class="button-icon" aria-hidden="true">◈</span><span class="button-label">Jalankan Batch</span></button>
-              </form>
-              <div class="batch-results hidden" id="batchResults" aria-live="polite"></div>
-              <div class="batch-summary hidden" id="batchSummary" aria-live="polite"></div>
-            </div>
-            <aside class="work-section model-performance" aria-labelledby="modelPerformanceTitle">
-              <h2 id="modelPerformanceTitle">Parameter &amp; Performa Model</h2>
-              <dl>
-                <div><dt>Kecepatan</dt><dd>~900 klaim/detik (1,1 ms)</dd></div>
-                <div><dt>Regulasi Rujukan</dt><dd>6 Dokumen Resmi Kemenkes</dd></div>
-                <div><dt>Kecerdasan</dt><dd>Validasi Aturan &amp; AI XGBoost</dd></div>
-              </dl>
-            </aside>
-          </section>
-          <section class="batch-result-table-section hidden" id="batchResultTableSection" aria-labelledby="batchResultsTitle">
-            <div class="section-heading"><div><h2 id="batchResultsTitle">Hasil Pemeriksaan Batch</h2><p>Klaim yang dianalisis pada simulasi ini.</p></div></div>
-            <div class="table-frame">
-              <div class="table-scroll">
-                <table class="claims-table results-table-new">
-                  <thead><tr><th>No</th><th>ID Klaim / SEP</th><th>Catatan Dokter</th><th>Tindakan (ICD)</th><th>Total Biaya</th><th>Status</th><th class="action-column">DETAIL</th></tr></thead>
-                  <tbody id="batchResultsTableBody"><tr><td colspan="7" class="table-message">Hasil batch akan tampil di sini.</td></tr></tbody>
-                </table>
-              </div>
-              <div id="batchResultsPaginationContainer" class="pagination-container"></div>
-            </div>
-          </section>
-        </main>
+        
 
         <main class="workspace tab-panel hidden" id="auditTab">
           <section class="page-heading"><div><p class="eyebrow">JEJAK VERIFIKASI</p><h2>Audit Trail</h2><p class="page-subtitle">Riwayat keputusan admin BPJS dan catatan verifikasi.</p></div><button class="button button-quiet" id="refreshAuditButton" type="button">↻ Perbarui</button></section>
