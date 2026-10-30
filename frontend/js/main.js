@@ -410,6 +410,7 @@ function bindRsResponseActions(id) {
 
 function setConnectionStatus(connected, totalClaims = 0) {
   const status = document.getElementById("connectionStatus");
+  if (!status) return;
   const text = status.querySelector(".status-text");
   const dot = status.querySelector(".status-dot");
   if (connected) {
