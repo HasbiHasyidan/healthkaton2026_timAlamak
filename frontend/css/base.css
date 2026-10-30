@@ -38,18 +38,17 @@ body {
 
 .login-navbar {
   width: 100%;
-  border-bottom: 1px solid var(--border-color);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 14px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--sidebar-bg, #0C2B1D);
+  padding: 12px 32px;
   position: sticky;
   top: 0;
   z-index: 50;
 }
 
 [data-theme="dark"] .login-navbar {
-  background: rgba(18, 24, 38, 0.85);
+  background: var(--sidebar-bg, #0C2B1D);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .login-navbar-inner {
@@ -74,9 +73,9 @@ body {
   gap: 8px;
   padding: 6px 14px;
   border-radius: 20px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: #059669;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.5px;
