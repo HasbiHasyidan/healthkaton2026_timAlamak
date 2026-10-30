@@ -1261,36 +1261,57 @@ h1 {
 
 
 /* ==========================================================================
-   SIDEBAR BOTTOM LOGOUT BUTTON
+   SIDEBAR BOTTOM LOGOUT BUTTON (Clean, transparent text button)
    ========================================================================== */
 .sidebar-bottom-actions {
   margin-top: auto;
-  padding: 8px 0 4px;
+  padding: 10px 14px 4px;
 }
 
 .sidebar-logout-btn {
-  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 6px 4px;
   color: #f87171 !important;
-  background: transparent;
-  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  user-select: none;
 }
 
 .sidebar-logout-btn svg {
   stroke: currentColor;
-  flex: 0 0 20px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
 }
 
 .sidebar-logout-btn:hover {
-  background: rgba(239, 68, 68, 0.12) !important;
-  border-color: rgba(239, 68, 68, 0.25) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   color: #fca5a5 !important;
+  opacity: 0.85;
+  transform: translateX(2px);
+}
+
+.sidebar.collapsed .sidebar-bottom-actions {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 4px;
 }
 
 .sidebar.collapsed .sidebar-logout-btn {
+  padding: 8px;
   justify-content: center;
-  padding: 0.75rem 0;
 }
 
 .sidebar.collapsed .sidebar-logout-btn .nav-label {
