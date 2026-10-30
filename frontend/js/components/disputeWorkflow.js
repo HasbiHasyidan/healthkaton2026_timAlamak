@@ -326,11 +326,23 @@ async function load() {
   body.innerHTML = '<tr><td colspan="6" class="table-message">Memuat klarifikasi…</td></tr>';
   try {
     const summary = await getDisputeSummary();
-    const summaryIds = { total: "disputeCountTotal", in_review: "disputeCountInReview", overdue_review: "disputeCountOverdue", needs_revision: "disputeCountRevision", approved: "disputeCountApproved", sent: "disputeCountSent", waiting_hospital_response: "disputeCountWaitingRs", waiting_reassessment: "disputeCountWaitingReassessment", late_hospital_response: "disputeCountLateRs" };
-    Object.entries(summaryIds).forEach(([key, id]) => {
-      const element = document.getElementById(id);
-      if (element) element.textContent = formatNumber(summary[key] || 0);
-    });
+    // 4 Kategori Metrik Terpadu
+    const actionBpjsCount = (summary.drafts || 0) + (summary.in_review || 0) + (summary.needs_revision || 0) + (summary.waiting_reassessment || 0);
+    const waitingRsCount = summary.waiting_hospital_response || summary.sent || 0;
+    const completedCount = (summary.approved || 0) + (summary.closed || 0);
+    const criticalCount = (summary.overdue_review || 0) + (summary.late_hospital_response || 0);
+
+    const elAction = document.getElementById("disputeCountActionBpjs");
+    if (elAction) elAction.textContent = formatNumber(actionBpjsCount);
+
+    const elWaiting = document.getElementById("disputeCountWaitingRs");
+    if (elWaiting) elWaiting.textContent = formatNumber(waitingRsCount);
+
+    const elCompleted = document.getElementById("disputeCountCompleted");
+    if (elCompleted) elCompleted.textContent = formatNumber(completedCount);
+
+    const elCritical = document.getElementById("disputeCountCritical");
+    if (elCritical) elCritical.textContent = formatNumber(criticalCount);
     const status = document.getElementById("disputeStatusFilter").value;
     records = await getDisputes(status);
     render();

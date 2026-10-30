@@ -172,15 +172,26 @@ function bindLogin() {
     const form = new FormData(event.currentTarget);
     const button = document.getElementById("loginButton");
     const error = document.getElementById("loginError");
+    const originalText = button.textContent;
     button.disabled = true;
+    button.textContent = "Memverifikasi...";
     error.textContent = "";
     try {
-      const user = await login(String(form.get("username")).trim(), String(form.get("password")));
+      // Memberikan jeda minimal 700ms agar efek verifikasi terlihat jelas dan natural
+      const [user] = await Promise.all([
+        login(String(form.get("username")).trim(), String(form.get("password"))),
+        new Promise((resolve) => setTimeout(resolve, 750))
+      ]);
       showAuthenticatedApp(user);
     } catch (loginError) {
-      error.textContent = loginError.message;
+      if (loginError.message && loginError.message.includes("Failed to fetch")) {
+        error.textContent = "Gagal terhubung ke server backend. Pastikan server aktif.";
+      } else {
+        error.textContent = loginError.message;
+      }
     } finally {
       button.disabled = false;
+      button.textContent = originalText;
     }
   });
   document.getElementById("logoutButton").addEventListener("click", async () => {
@@ -820,10 +831,27 @@ function applyAnalyticsFilter() {
   renderAllAnalyticsCharts();
 }
 
+function getChartThemeColors() {
+  const isDark = document.body.classList.contains("dark-mode");
+  return {
+    textColor: isDark ? "#94a3b8" : "#475569",
+    gridColor: isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.06)",
+    cardBg: isDark ? "#1b2922" : "#ffffff",
+    titleColor: isDark ? "#f8fafc" : "#1e293b",
+  };
+}
+
+window.addEventListener("klaimguard:theme-change", () => {
+  if (state.analyticsData) {
+    renderAllAnalyticsCharts();
+  }
+});
+
 function renderAllAnalyticsCharts() {
   const analytics = state.analyticsData;
   if (!analytics || typeof window.Chart === "undefined") return;
   const filterCat = state.analyticsFilter.category;
+  const chartTheme = getChartThemeColors();
 
   // Chart 1: Financial Comparison (Grouped Bar)
   financialComparisonChart?.destroy();
@@ -881,7 +909,7 @@ function renderAllAnalyticsCharts() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: "top", labels: { boxWidth: 12, font: { size: 11, family: "Plus Jakarta Sans" } } },
+          legend: { position: "top", labels: { color: chartTheme.textColor, boxWidth: 12, font: { size: 11, family: "Plus Jakarta Sans" } } },
           tooltip: {
             callbacks: {
               label: (context) => `${context.dataset.label}: ${formatIdr(context.raw)}`,
@@ -892,11 +920,16 @@ function renderAllAnalyticsCharts() {
           y: {
             beginAtZero: true,
             ticks: {
+              color: chartTheme.textColor,
               callback: (value) => "Rp " + formatMiliar(value),
               font: { size: 10 },
             },
+            grid: { color: chartTheme.gridColor },
           },
-          x: { ticks: { font: { size: 11, weight: "600" } } },
+          x: {
+            ticks: { color: chartTheme.textColor, font: { size: 11, weight: "600" } },
+            grid: { color: chartTheme.gridColor },
+          },
         },
       },
     });
@@ -943,7 +976,7 @@ function renderAllAnalyticsCharts() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+          legend: { position: "top", labels: { color: chartTheme.textColor, boxWidth: 12, font: { size: 11 } } },
           tooltip: {
             callbacks: {
               afterLabel: (ctx) => {
@@ -958,22 +991,27 @@ function renderAllAnalyticsCharts() {
             type: "linear",
             position: "left",
             beginAtZero: true,
-            title: { display: true, text: "Jumlah Klaim", font: { size: 10 } },
-            ticks: { font: { size: 10 } },
+            title: { display: true, text: "Jumlah Klaim", color: chartTheme.textColor, font: { size: 10 } },
+            ticks: { color: chartTheme.textColor, font: { size: 10 } },
+            grid: { color: chartTheme.gridColor },
           },
           y1: {
             type: "linear",
             position: "right",
             min: 0,
             max: 100,
-            title: { display: true, text: "% Anomali", font: { size: 10 } },
+            title: { display: true, text: "% Anomali", color: chartTheme.textColor, font: { size: 10 } },
             ticks: {
+              color: chartTheme.textColor,
               callback: (v) => v + "%",
               font: { size: 10 },
             },
             grid: { drawOnChartArea: false },
           },
-          x: { ticks: { font: { size: 10 } } },
+          x: {
+            ticks: { color: chartTheme.textColor, font: { size: 10 } },
+            grid: { color: chartTheme.gridColor },
+          },
         },
       },
     });
@@ -996,6 +1034,7 @@ function renderAllAnalyticsCharts() {
           {
             data: bucketCounts,
             backgroundColor: ["#10b981", "#3b82f6", "#f59e0b", "#ef4444"],
+            borderColor: chartTheme.cardBg,
             borderWidth: 2,
             hoverOffset: 6,
           },
@@ -1006,7 +1045,7 @@ function renderAllAnalyticsCharts() {
         maintainAspectRatio: false,
         cutout: "60%",
         plugins: {
-          legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 10 } } },
+          legend: { position: "bottom", labels: { color: chartTheme.textColor, boxWidth: 12, font: { size: 10 } } },
           tooltip: {
             callbacks: {
               label: (ctx) => {
@@ -1069,18 +1108,22 @@ function renderAllAnalyticsCharts() {
           x: {
             beginAtZero: true,
             ticks: {
+              color: chartTheme.textColor,
               callback: (v) => "Rp " + formatMiliar(v),
               font: { size: 10 },
             },
+            grid: { color: chartTheme.gridColor },
           },
           y: {
             ticks: {
+              color: chartTheme.textColor,
               font: { size: 10, weight: "600" },
               callback: function(val) {
                 const label = this.getLabelForValue(val);
                 return label.length > 28 ? label.substring(0, 26) + "…" : label;
               },
             },
+            grid: { color: chartTheme.gridColor },
           },
         },
       },
