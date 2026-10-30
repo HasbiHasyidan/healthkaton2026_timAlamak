@@ -1259,61 +1259,33 @@ h1 {
   border-top: 1px dashed var(--border-color);
 }
 
-
 /* ==========================================================================
-   SIDEBAR BOTTOM LOGOUT BUTTON (Clean, transparent text button)
+   SIDEBAR BOTTOM LOGOUT BUTTON
+   Identik dengan nav-item lainnya (alignment, ukuran, centering saat collapsed)
+   namun tetap tanpa background box default.
    ========================================================================== */
 .sidebar-bottom-actions {
   margin-top: auto;
-  padding: 10px 14px 4px;
+  padding-top: 10px;
 }
 
 .sidebar-logout-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  width: auto;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  padding: 6px 4px;
   color: #f87171 !important;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
+  background: transparent !important;
+  border: 0 !important;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  user-select: none;
+  width: 100%;
 }
 
-.sidebar-logout-btn svg {
-  stroke: currentColor;
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
+.sidebar-logout-btn > svg {
+  stroke: #f87171 !important;
 }
 
 .sidebar-logout-btn:hover {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  background: rgba(239, 68, 68, 0.12) !important;
   color: #fca5a5 !important;
-  opacity: 0.85;
-  transform: translateX(2px);
 }
 
-.sidebar.collapsed .sidebar-bottom-actions {
-  display: flex;
-  justify-content: center;
-  padding: 10px 0 4px;
-}
-
-.sidebar.collapsed .sidebar-logout-btn {
-  padding: 8px;
-  justify-content: center;
-}
-
-.sidebar.collapsed .sidebar-logout-btn .nav-label {
-  display: none;
+.sidebar-logout-btn:hover > svg {
+  stroke: #fca5a5 !important;
 }
