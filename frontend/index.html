@@ -599,52 +599,6 @@
               </div>
             </article>
           </section>
-
-          <!-- 5. Collapsible Deep-Dive Analytics (LOS & Cost Segmentations) -->
-          <details class="analytics-deep-dive-card">
-            <summary class="analytics-deep-dive-trigger">
-              <div class="deep-dive-trigger-content">
-                <span class="deep-dive-icon">📊</span>
-                <div>
-                  <strong>Lihat Analisis Sebaran Lanjutan (Korelasi Lama Rawat LOS &amp; Klaster Tagihan)</strong>
-                  <p>Buka grafik analitik pendukung untuk penelusuran lama rawat inap dan proporsi risiko tagihan.</p>
-                </div>
-              </div>
-              <span class="deep-dive-arrow">▾ Buka Detail</span>
-            </summary>
-            <div class="analytics-deep-dive-body">
-              <div class="analytics-charts-grid" style="margin-top: 16px;">
-                <!-- Chart 3: LOS Correlation -->
-                <article class="analytics-chart-card">
-                  <div class="analytics-chart-header">
-                    <div>
-                      <h3>Korelasi Lama Rawat (LOS) vs Tingkat Anomali</h3>
-                      <p class="analytics-chart-subtitle">Volume Klaim (Batang) vs % Anomali &amp; Rata-rata Biaya (Garis)</p>
-                    </div>
-                    <span class="analytics-chart-badge">Klinis &amp; LOS</span>
-                  </div>
-                  <div class="chart-container-large">
-                    <canvas id="losCorrelationChart" aria-label="Grafik korelasi lama rawat dan anomali"></canvas>
-                  </div>
-                </article>
-
-                <!-- Chart 4: Cost Range & Risk Concentration -->
-                <article class="analytics-chart-card">
-                  <div class="analytics-chart-header">
-                    <div>
-                      <h3>Distribusi Rentang Tagihan &amp; Tingkat Risiko</h3>
-                      <p class="analytics-chart-subtitle">Proporsi klaim berdasarkan klaster biaya dan tingkat anomali</p>
-                    </div>
-                    <span class="analytics-chart-badge">Segmentasi Risiko</span>
-                  </div>
-                  <div class="chart-container-large">
-                    <canvas id="costRiskDistChart" aria-label="Grafik distribusi sebaran tagihan"></canvas>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
-
         </main>
 
         <main class="workspace tab-panel hidden assistant-workspace" id="assistantTab">
