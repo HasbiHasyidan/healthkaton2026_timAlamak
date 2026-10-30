@@ -92,7 +92,8 @@ function showAuthenticatedApp(user) {
   document.getElementById("appContainer").classList.remove("is-hidden");
   document.getElementById("profileName").textContent = user.user_id;
   const roleLabels = { admin_bpjs: "Admin Verifikator", petugas_klaim_rs: "Petugas Klaim RS" };
-  document.getElementById("profileRole").textContent = roleLabels[user.role] || user.role;
+  const roleEl = document.getElementById("profileRole");
+  if (roleEl) roleEl.textContent = roleLabels[user.role] || user.role;
   initTheme();
   initSidebarToggle(user.role);
   if (user.role === "petugas_klaim_rs") {

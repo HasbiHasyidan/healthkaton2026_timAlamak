@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="css/variables.css?v=enterprise-8" />
-    <link rel="stylesheet" href="css/base.css?v=enterprise-12" />
+    <link rel="stylesheet" href="css/base.css?v=enterprise-13" />
     <link rel="stylesheet" href="css/components/buttons.css?v=enterprise-8" />
     <link rel="stylesheet" href="css/components/cards.css?v=enterprise-8" />
     <link rel="stylesheet" href="css/components/table.css?v=enterprise-8" />
@@ -106,9 +106,7 @@
               <span aria-hidden="true">☾</span>
             </button>
             <div class="profile-chip" aria-label="Pengguna aktif">
-              <span class="profile-avatar" aria-hidden="true">VM</span>
               <span class="profile-name" id="profileName">Admin</span>
-              <span class="profile-role" id="profileRole">Administrator</span>
               <button class="button button-quiet logout-button" id="logoutButton" type="button">Keluar</button>
             </div>
           </div>
@@ -229,9 +227,9 @@
             <aside class="work-section model-performance" aria-labelledby="modelPerformanceTitle">
               <h2 id="modelPerformanceTitle">Parameter &amp; Performa Model</h2>
               <dl>
-                <div><dt>Throughput</dt><dd>~1.1 ms/klaim</dd></div>
-                <div><dt>Knowledge Base</dt><dd>6 Regulasi Kemenkes</dd></div>
-                <div><dt>Engine</dt><dd>Dual-Engine XGBoost + Rule Engine</dd></div>
+                <div><dt>Kecepatan</dt><dd>~900 klaim/detik (1,1 ms)</dd></div>
+                <div><dt>Regulasi Rujukan</dt><dd>6 Dokumen Resmi Kemenkes</dd></div>
+                <div><dt>Kecerdasan</dt><dd>Validasi Aturan &amp; AI XGBoost</dd></div>
               </dl>
             </aside>
           </section>
@@ -621,27 +619,7 @@
             </div>
           </section>
 
-          <!-- Regulatory & Methodology Context -->
-          <section class="report-grid report-context-grid" aria-label="Metode dan sumber regulasi">
-            <article class="report-panel report-method-panel">
-              <h3>Metode Penapisan Hybrid AI</h3>
-              <p class="report-method-intro">HybridFraudDetector menggabungkan Rule Engine deterministik, validasi klinis INA-CBG, dan XGBoost model dengan pengawasan verifikator medis.</p>
-              <ol class="report-method-list">
-                <li><strong>Rule Engine deterministik:</strong> mencocokkan kombinasi kode dengan aturan koding Permenkes terdaftar.</li>
-                <li><strong>Validasi klinis dan tarif:</strong> mendeteksi disparitas tagihan pada tagihan &gt; Rp 7,5 juta atau rasio tarif &ge; 1,5.</li>
-                <li><strong>XGBoost Risk Scorer:</strong> probabilitas risiko machine learning untuk menandai komorbiditas janggal.</li>
-              </ol>
-              <p class="report-context-meta" id="reportRuleCount">Memuat aturan terdaftar…</p>
-            </article>
-            <article class="report-panel report-source-panel">
-              <h3>Dasar Hukum &amp; Regulasi Kemenkes</h3>
-              <p class="report-context-meta" id="reportSourcesMeta">Memuat sumber regulasi…</p>
-              <ul class="report-source-list" id="reportSourcesList"><li>Memuat judul sumber…</li></ul>
-            </article>
-          </section>
 
-          <!-- Executive Summary Callout -->
-          <section class="report-summary" id="reportSummary"></section>
         </main>
 
         <main class="workspace tab-panel hidden assistant-workspace" id="assistantTab">
