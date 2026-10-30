@@ -239,8 +239,33 @@ function setDetail(item) {
     "SEP " + item.sep_number + " \u00b7 " + (labels[item.status] || item.status) + " \u00b7 template " + (item.template_code || "formal") + " \u00b7 versi " + item.current_version + (item.deadline_at ? " \u00b7 batas respons " + new Date(item.deadline_at).toLocaleString("id-ID") : "") + (item.is_overdue ? " \u00b7 menunggu " + item.review_age_hours + " jam" : "") + " \u00b7 dibuat oleh " + item.created_by;
   const latestResponse = (item.hospital_responses || []).at(-1);
   const currentStep = item.status === "closed" ? 5 : item.status === "in_review" && latestResponse?.status === "submitted" ? 3 : item.status === "in_review" ? 1 : item.status === "draft" || item.status === "needs_revision" ? 0 : item.status === "approved" ? 2 : latestResponse?.status === "submitted" ? 4 : 2;
-  const steps = ["Draf Verifikator", "Pemeriksaan akhir", "Dikirim ke RS", "Respons RS", "Penilaian ulang", "Selesai di aplikasi"];
-  document.getElementById("bpjsClarificationStepper").innerHTML = steps.map((step, index) => `<span class="${index <= currentStep ? "is-complete" : ""}">${step}</span>`).join("");
+  const steps = [
+    { title: "Draf Awal", desc: "Verifikator" },
+    { title: "Pemeriksaan Akhir", desc: "Validasi pasal" },
+    { title: "Dikirim ke RS", desc: "Notifikasi faskes" },
+    { title: "Respons RS", desc: "Sanggahan berkas" },
+    { title: "Penilaian Ulang", desc: "Uji tanggapan" },
+    { title: "Selesai", desc: "Tuntas audit" },
+  ];
+  document.getElementById("bpjsClarificationStepper").innerHTML = steps.map((step, index) => {
+    const isDone = index < currentStep;
+    const isCurrent = index === currentStep;
+    const statusClass = isDone ? "is-done" : isCurrent ? "is-active" : "is-pending";
+    const nodeIcon = isDone ? "✓" : (index + 1);
+    return `
+      <div class="stepper-item ${statusClass}">
+        <div class="stepper-node-wrap">
+          ${index > 0 ? `<div class="stepper-line stepper-line-left ${index <= currentStep ? "line-active" : ""}"></div>` : ""}
+          <div class="stepper-node" aria-hidden="true">${nodeIcon}</div>
+          ${index < steps.length - 1 ? `<div class="stepper-line stepper-line-right ${index < currentStep ? "line-active" : ""}"></div>` : ""}
+        </div>
+        <div class="stepper-content">
+          <span class="stepper-title">${step.title}</span>
+          <span class="stepper-desc">${step.desc}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
   const editor = document.getElementById("disputeLetterBody");
   editor.value = item.letter_body;
   editor.readOnly = !editable;

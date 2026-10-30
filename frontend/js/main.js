@@ -1162,7 +1162,8 @@ async function loadReportData() {
       anomalyBreakdownEl.textContent = `${formatNumber(data.upcoding_count)} Upcoding · ${formatNumber(data.unbundling_count)} Unbundling`;
     }
     if (costDisparityEl) {
-      const avgFraud = data.fraud_claims ? fin.fraud_charge / data.fraud_claims : 0;
+      const totalFraudCharge = (fin.upcoding_charge || 0) + (fin.unbundling_charge || 0);
+      const avgFraud = data.fraud_claims ? totalFraudCharge / data.fraud_claims : 0;
       costDisparityEl.textContent = formatIdr(avgFraud);
     }
 

@@ -1170,3 +1170,91 @@ h1 {
     flex: 1;
   }
 }
+
+
+/* ==========================================================================
+   DEEP DIVE ANALYTICS COLLAPSIBLE (Reports Tab Secondary Charts)
+   ========================================================================== */
+.analytics-deep-dive-card {
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--card-bg);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.analytics-deep-dive-card[open] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.analytics-deep-dive-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--card-bg);
+  transition: background 0.2s ease;
+  list-style: none;
+}
+
+.analytics-deep-dive-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.analytics-deep-dive-trigger:hover {
+  background: var(--surface-muted);
+}
+
+.deep-dive-trigger-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.deep-dive-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--bpjs-primary);
+}
+
+.deep-dive-trigger-content strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.deep-dive-trigger-content p {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.deep-dive-arrow {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bpjs-primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.12);
+  white-space: nowrap;
+}
+
+.analytics-deep-dive-card[open] .deep-dive-arrow {
+  background: var(--bpjs-primary);
+  color: #ffffff;
+}
+
+.analytics-deep-dive-body {
+  padding: 0 20px 20px;
+  border-top: 1px dashed var(--border-color);
+}

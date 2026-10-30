@@ -352,29 +352,90 @@
                 </div>
               </div>
               <div id="disputeDetailContent" class="dispute-detail-body">
+                <!-- Pipeline Delivery Tracking Stepper -->
                 <div class="rs-stepper" id="bpjsClarificationStepper" aria-label="Tahapan klarifikasi"></div>
                 <p class="feedback-result" id="disputeReviewNote"></p>
-                <label class="form-field" for="disputeLetterBody">Isi surat permintaan klarifikasi</label><textarea id="disputeLetterBody" class="dispute-letter-editor" rows="14"></textarea>
-                <section class="dispute-versions"><h3>Riwayat versi surat</h3><div id="disputeVersionList"></div></section>
-                <section class="dispute-citations"><h3>Dasar regulasi dan kutipan</h3><ul id="disputeCitationList"></ul></section>
-                <section class="dispute-citations dispute-hospital-thread"><h3>Thread klarifikasi rumah sakit</h3><div id="disputeHospitalThread"><p>Belum ada respons dari rumah sakit.</p></div></section>
-                <section class="dispute-review-box hidden" id="disputeReevaluation"><h3>Penilaian ulang respons RS</h3><label class="form-field" for="disputeReevaluationNotes">Catatan verifikator</label><textarea id="disputeReevaluationNotes" rows="3" placeholder="Catatan penilaian atau alasan tindak lanjut"></textarea><div class="dispute-actions"><button class="button button-quiet" id="requestAdditionalClarificationButton" type="button">Minta klarifikasi tambahan</button><button class="button button-primary" id="acceptHospitalResponseButton" type="button">Terima penjelasan</button></div></section>
-                <section class="dispute-comments"><h3>Diskusi dan catatan klarifikasi</h3><ol id="disputeCommentList"></ol><label class="form-field" for="disputeCommentInput">Tambah komentar</label><textarea id="disputeCommentInput" rows="3" maxlength="4000" placeholder="Catatan untuk Admin Verifikator"></textarea><button class="button button-quiet" id="addDisputeCommentButton" type="button">Kirim komentar</button></section>
-                <div class="dispute-actions" id="disputeBpjsActions"><button class="button button-quiet" id="saveDisputeButton" type="button">Simpan perubahan</button><button class="button button-primary" id="submitDisputeButton" type="button">Ajukan persetujuan</button></div>
-                <div class="dispute-sent-form hidden" id="disputeSentForm">
-                  <p class="dispute-sent-label">Catat pengiriman manual jika diperlukan untuk data lama:</p>
-                  <div class="dispute-sent-fields">
-                    <label class="form-field" for="disputeRecipient">Faskes penerima</label>
-                    <input id="disputeRecipient" type="text" placeholder="Nama rumah sakit" aria-label="Faskes penerima" />
-                    <label class="form-field" for="disputeReference">Nomor Referensi / Bukti Pengiriman</label>
-                    <input id="disputeReference" type="text" placeholder="Contoh: REF-2024/BPJS/03576 atau No. Resi Surat" aria-label="Nomor referensi" />
+
+                <!-- 2-Column Grid Layout: Dokumen (Kiri) & Kolaborasi/Aksi (Kanan) -->
+                <div class="dispute-modal-grid">
+                  <!-- Kolom Kiri: Draft Surat Klarifikasi & Regulasi -->
+                  <div class="dispute-col-left">
+                    <div class="dispute-card-block">
+                      <div class="dispute-block-header">
+                        <label class="form-field" for="disputeLetterBody" style="margin:0;font-size:13px;font-weight:700;">Isi Surat Permintaan Klarifikasi</label>
+                        <span class="dispute-badge-info">KOP RESMI BPJS</span>
+                      </div>
+                      <textarea id="disputeLetterBody" class="dispute-letter-editor" rows="12" placeholder="Menyusun draf surat klarifikasi resmi..."></textarea>
+                      <div class="dispute-actions" id="disputeBpjsActions" style="position:static;margin:10px 0 0;padding:0;background:transparent;border:none;">
+                        <button class="button button-quiet" id="saveDisputeButton" type="button">Simpan Perubahan</button>
+                        <button class="button button-primary" id="submitDisputeButton" type="button">Ajukan Persetujuan</button>
+                      </div>
+                    </div>
+
+                    <section class="dispute-citations">
+                      <h3>Dasar Regulasi &amp; Kutipan Resmi</h3>
+                      <ul id="disputeCitationList"></ul>
+                    </section>
+
+                    <section class="dispute-versions">
+                      <h3>Riwayat Versi Surat</h3>
+                      <div id="disputeVersionList"></div>
+                    </section>
                   </div>
-                  <div class="dispute-actions">
-                    <button class="button button-primary" id="markDisputeSentButton" type="button">Catat sudah dikirim</button>
+
+                  <!-- Kolom Kanan: Respon RS, Review & Diskusi Internal -->
+                  <div class="dispute-col-right">
+                    <section class="dispute-citations dispute-hospital-thread">
+                      <h3>Thread Tanggapan Rumah Sakit</h3>
+                      <div id="disputeHospitalThread"><p>Belum ada respons dari rumah sakit.</p></div>
+                    </section>
+
+                    <div class="dispute-review-box hidden" id="disputeVerifierActions">
+                      <label class="form-field" for="disputeReviewNotes">Catatan Admin Verifikator</label>
+                      <textarea id="disputeReviewNotes" rows="3" placeholder="Catatan persetujuan atau revisi..."></textarea>
+                      <div class="dispute-actions">
+                        <button class="button button-quiet" id="requestDisputeRevisionButton" type="button">Minta Revisi</button>
+                        <button class="button button-primary" id="approveDisputeButton" type="button">Setujui &amp; Kirim ke RS</button>
+                      </div>
+                    </div>
+
+                    <section class="dispute-review-box hidden" id="disputeReevaluation">
+                      <h3>Penilaian Ulang Respons RS</h3>
+                      <label class="form-field" for="disputeReevaluationNotes">Catatan Verifikator</label>
+                      <textarea id="disputeReevaluationNotes" rows="3" placeholder="Catatan penilaian atau alasan tindak lanjut..."></textarea>
+                      <div class="dispute-actions">
+                        <button class="button button-quiet" id="requestAdditionalClarificationButton" type="button">Minta Klarifikasi Tambahan</button>
+                        <button class="button button-primary" id="acceptHospitalResponseButton" type="button">Terima Penjelasan</button>
+                      </div>
+                    </section>
+
+                    <div class="dispute-sent-form hidden" id="disputeSentForm">
+                      <p class="dispute-sent-label">Catat pengiriman manual jika diperlukan:</p>
+                      <div class="dispute-sent-fields">
+                        <label class="form-field" for="disputeRecipient">Faskes Penerima</label>
+                        <input id="disputeRecipient" type="text" placeholder="Nama rumah sakit" aria-label="Faskes penerima" />
+                        <label class="form-field" for="disputeReference">Nomor Referensi / Bukti Pengiriman</label>
+                        <input id="disputeReference" type="text" placeholder="Contoh: REF-2024/BPJS/03576 atau Resi" aria-label="Nomor referensi" />
+                      </div>
+                      <div class="dispute-actions">
+                        <button class="button button-primary" id="markDisputeSentButton" type="button">Catat Sudah Dikirim</button>
+                      </div>
+                    </div>
+
+                    <section class="dispute-comments">
+                      <h3>Diskusi &amp; Catatan Internal</h3>
+                      <ol id="disputeCommentList"></ol>
+                      <label class="form-field" for="disputeCommentInput">Tambah Komentar</label>
+                      <textarea id="disputeCommentInput" rows="2" maxlength="4000" placeholder="Tulis catatan untuk tim verifikator..."></textarea>
+                      <button class="button button-quiet" id="addDisputeCommentButton" type="button">Kirim Komentar</button>
+                    </section>
+
+                    <section class="dispute-history">
+                      <h3>Riwayat Aktivitas</h3>
+                      <ol id="disputeHistoryList"></ol>
+                    </section>
                   </div>
                 </div>
-                <div class="dispute-review-box hidden" id="disputeVerifierActions"><label class="form-field" for="disputeReviewNotes">Catatan Admin Verifikator</label><textarea id="disputeReviewNotes" rows="3" placeholder="Catatan persetujuan atau revisi"></textarea><div class="dispute-actions"><button class="button button-quiet" id="requestDisputeRevisionButton" type="button">Minta revisi</button><button class="button button-primary" id="approveDisputeButton" type="button">Setujui &amp; Kirim ke RS</button></div></div>
-                <section class="dispute-history"><h3>Riwayat</h3><ol id="disputeHistoryList"></ol></section>
               </div>
             </div>
           </div>
@@ -393,7 +454,7 @@
             </div>
           </section>
 
-          <!-- 4 Executive KPI Cards -->
+          <!-- 1. 4 Executive KPI Cards -->
           <section class="analytics-kpis-grid" aria-label="Ringkasan Eksekutif Analitik">
             <article class="analytics-kpi-card" style="--kpi-accent: #0284c7;">
               <div class="analytics-kpi-header">
@@ -432,98 +493,7 @@
             </article>
           </section>
 
-          <!-- Interactive Filter & Segment Bar -->
-          <section class="analytics-filter-bar" aria-label="Filter analitik klaim">
-            <div class="analytics-filters-left">
-              <label for="analyticsCategoryFilter" class="sr-only">Filter Kategori</label>
-              <select id="analyticsCategoryFilter" class="analytics-filter-select">
-                <option value="all">Semua Kategori (5.500 Klaim)</option>
-                <option value="upcoding">Upcoding Saja (1.100 Klaim)</option>
-                <option value="unbundling">Unbundling Saja (825 Klaim)</option>
-                <option value="safe">Klaim Aman Saja (3.575 Klaim)</option>
-              </select>
-
-              <label for="analyticsCostFilter" class="sr-only">Filter Rentang Tagihan</label>
-              <select id="analyticsCostFilter" class="analytics-filter-select">
-                <option value="all">Semua Nilai Tagihan</option>
-                <option value="low">&lt; Rp 5 Juta (Rawat Jalan / Ringan)</option>
-                <option value="medium">Rp 5 - 10 Juta (Rawat Sedang)</option>
-                <option value="high">Rp 10 - 15 Juta (Risiko Tinggi)</option>
-                <option value="critical">&gt; Rp 15 Juta (Risiko Ekstrem)</option>
-              </select>
-
-              <div class="analytics-chip-group" role="group" aria-label="Preset Cepat">
-                <button type="button" class="analytics-chip is-active" data-analytics-preset="all">Semua</button>
-                <button type="button" class="analytics-chip" data-analytics-preset="upcoding">Upcoding</button>
-                <button type="button" class="analytics-chip" data-analytics-preset="unbundling">Unbundling</button>
-                <button type="button" class="analytics-chip" data-analytics-preset="high_risk">&gt; Rp 10 Jt</button>
-              </div>
-            </div>
-            <div id="analyticsFilterStatus" style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">
-              Menampilkan data menyeluruh
-            </div>
-          </section>
-
-          <!-- 4 Rich Analytics Charts -->
-          <section class="analytics-charts-grid" aria-label="Visualisasi data analitik">
-            <!-- Chart 1: Financial Comparison -->
-            <article class="analytics-chart-card">
-              <div class="analytics-chart-header">
-                <div>
-                  <h3>Komparasi Finansial per Kategori Klaim</h3>
-                  <p class="analytics-chart-subtitle">Total Tagihan RS vs Tarif Disetujui INA-CBG vs Potensi Penghematan</p>
-                </div>
-                <span class="analytics-chart-badge">Finansial JKN</span>
-              </div>
-              <div class="chart-container-large">
-                <canvas id="financialComparisonChart" aria-label="Grafik komparasi finansial klaim"></canvas>
-              </div>
-            </article>
-
-            <!-- Chart 2: LOS Correlation -->
-            <article class="analytics-chart-card">
-              <div class="analytics-chart-header">
-                <div>
-                  <h3>Korelasi Lama Rawat (LOS) vs Tingkat Anomali</h3>
-                  <p class="analytics-chart-subtitle">Volume Klaim (Batang) vs % Anomali &amp; Rata-rata Biaya (Garis)</p>
-                </div>
-                <span class="analytics-chart-badge">Klinis &amp; LOS</span>
-              </div>
-              <div class="chart-container-large">
-                <canvas id="losCorrelationChart" aria-label="Grafik korelasi lama rawat dan anomali"></canvas>
-              </div>
-            </article>
-
-            <!-- Chart 3: Cost Range & Risk Concentration -->
-            <article class="analytics-chart-card">
-              <div class="analytics-chart-header">
-                <div>
-                  <h3>Distribusi Rentang Tagihan &amp; Tingkat Risiko</h3>
-                  <p class="analytics-chart-subtitle">Proporsi klaim berdasarkan klaster biaya dan tingkat anomali</p>
-                </div>
-                <span class="analytics-chart-badge">Segmentasi Risiko</span>
-              </div>
-              <div class="chart-container-large">
-                <canvas id="costRiskDistChart" aria-label="Grafik distribusi sebaran tagihan"></canvas>
-              </div>
-            </article>
-
-            <!-- Chart 4: Top Violations -->
-            <article class="analytics-chart-card">
-              <div class="analytics-chart-header">
-                <div>
-                  <h3>Top 8 Pola Anomali ICD-10 &amp; Tindakan Terbanyak</h3>
-                  <p class="analytics-chart-subtitle">Kombinasi diagnosis &amp; tindakan dengan akumulasi potensi kebocoran terbesar</p>
-                </div>
-                <span class="analytics-chart-badge">Top Kebocoran</span>
-              </div>
-              <div class="chart-container-large">
-                <canvas id="topAnomaliesChart" aria-label="Grafik top anomali klaim"></canvas>
-              </div>
-            </article>
-          </section>
-
-          <!-- 3 Strategic Clinical Insights Cards -->
+          <!-- 2. Wawasan Kunci: 3 Strategic Clinical Insights Cards (Ditempatkan di atas untuk insight instan) -->
           <section class="clinical-insights-section" aria-label="Temuan dan Intelijen Klinis Utama">
             <div class="section-heading compact-heading" style="margin-bottom: 12px;">
               <div>
@@ -564,7 +534,115 @@
             </div>
           </section>
 
-          <!-- Top High Impact Claims Table -->
+          <!-- 3. Interactive Filter & Segment Bar -->
+          <section class="analytics-filter-bar" aria-label="Filter analitik klaim">
+            <div class="analytics-filters-left">
+              <label for="analyticsCategoryFilter" class="sr-only">Filter Kategori</label>
+              <select id="analyticsCategoryFilter" class="analytics-filter-select">
+                <option value="all">Semua Kategori (5.500 Klaim)</option>
+                <option value="upcoding">Upcoding Saja (1.100 Klaim)</option>
+                <option value="unbundling">Unbundling Saja (825 Klaim)</option>
+                <option value="safe">Klaim Aman Saja (3.575 Klaim)</option>
+              </select>
+
+              <label for="analyticsCostFilter" class="sr-only">Filter Rentang Tagihan</label>
+              <select id="analyticsCostFilter" class="analytics-filter-select">
+                <option value="all">Semua Nilai Tagihan</option>
+                <option value="low">&lt; Rp 5 Juta (Rawat Jalan / Ringan)</option>
+                <option value="medium">Rp 5 - 10 Juta (Rawat Sedang)</option>
+                <option value="high">Rp 10 - 15 Juta (Risiko Tinggi)</option>
+                <option value="critical">&gt; Rp 15 Juta (Risiko Ekstrem)</option>
+              </select>
+
+              <div class="analytics-chip-group" role="group" aria-label="Preset Cepat">
+                <button type="button" class="analytics-chip is-active" data-analytics-preset="all">Semua</button>
+                <button type="button" class="analytics-chip" data-analytics-preset="upcoding">Upcoding</button>
+                <button type="button" class="analytics-chip" data-analytics-preset="unbundling">Unbundling</button>
+                <button type="button" class="analytics-chip" data-analytics-preset="high_risk">&gt; Rp 10 Jt</button>
+              </div>
+            </div>
+            <div id="analyticsFilterStatus" style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">
+              Menampilkan data menyeluruh
+            </div>
+          </section>
+
+          <!-- 4. 2 Core High-Impact Analytics Charts (Focused on Financials & Top Violations) -->
+          <section class="analytics-charts-grid" aria-label="Visualisasi data analitik utama">
+            <!-- Chart 1: Financial Comparison -->
+            <article class="analytics-chart-card">
+              <div class="analytics-chart-header">
+                <div>
+                  <h3>Komparasi Finansial per Kategori Klaim</h3>
+                  <p class="analytics-chart-subtitle">Total Tagihan RS vs Tarif Disetujui INA-CBG vs Potensi Penghematan</p>
+                </div>
+                <span class="analytics-chart-badge">Finansial JKN</span>
+              </div>
+              <div class="chart-container-large">
+                <canvas id="financialComparisonChart" aria-label="Grafik komparasi finansial klaim"></canvas>
+              </div>
+            </article>
+
+            <!-- Chart 2: Top Violations -->
+            <article class="analytics-chart-card">
+              <div class="analytics-chart-header">
+                <div>
+                  <h3>Top 8 Pola Anomali ICD-10 &amp; Tindakan Terbanyak</h3>
+                  <p class="analytics-chart-subtitle">Kombinasi diagnosis &amp; tindakan dengan akumulasi potensi kebocoran terbesar</p>
+                </div>
+                <span class="analytics-chart-badge">Top Kebocoran</span>
+              </div>
+              <div class="chart-container-large">
+                <canvas id="topAnomaliesChart" aria-label="Grafik top anomali klaim"></canvas>
+              </div>
+            </article>
+          </section>
+
+          <!-- 5. Collapsible Deep-Dive Analytics (LOS & Cost Segmentations) -->
+          <details class="analytics-deep-dive-card">
+            <summary class="analytics-deep-dive-trigger">
+              <div class="deep-dive-trigger-content">
+                <span class="deep-dive-icon">📊</span>
+                <div>
+                  <strong>Lihat Analisis Sebaran Lanjutan (Korelasi Lama Rawat LOS &amp; Klaster Tagihan)</strong>
+                  <p>Buka grafik analitik pendukung untuk penelusuran lama rawat inap dan proporsi risiko tagihan.</p>
+                </div>
+              </div>
+              <span class="deep-dive-arrow">▾ Buka Detail</span>
+            </summary>
+            <div class="analytics-deep-dive-body">
+              <div class="analytics-charts-grid" style="margin-top: 16px;">
+                <!-- Chart 3: LOS Correlation -->
+                <article class="analytics-chart-card">
+                  <div class="analytics-chart-header">
+                    <div>
+                      <h3>Korelasi Lama Rawat (LOS) vs Tingkat Anomali</h3>
+                      <p class="analytics-chart-subtitle">Volume Klaim (Batang) vs % Anomali &amp; Rata-rata Biaya (Garis)</p>
+                    </div>
+                    <span class="analytics-chart-badge">Klinis &amp; LOS</span>
+                  </div>
+                  <div class="chart-container-large">
+                    <canvas id="losCorrelationChart" aria-label="Grafik korelasi lama rawat dan anomali"></canvas>
+                  </div>
+                </article>
+
+                <!-- Chart 4: Cost Range & Risk Concentration -->
+                <article class="analytics-chart-card">
+                  <div class="analytics-chart-header">
+                    <div>
+                      <h3>Distribusi Rentang Tagihan &amp; Tingkat Risiko</h3>
+                      <p class="analytics-chart-subtitle">Proporsi klaim berdasarkan klaster biaya dan tingkat anomali</p>
+                    </div>
+                    <span class="analytics-chart-badge">Segmentasi Risiko</span>
+                  </div>
+                  <div class="chart-container-large">
+                    <canvas id="costRiskDistChart" aria-label="Grafik distribusi sebaran tagihan"></canvas>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </details>
+
+          <!-- 6. Top High Impact Claims Table -->
           <section class="high-impact-section" aria-label="Klaim dengan dampak finansial tertinggi">
             <div class="high-impact-header">
               <div>
@@ -578,25 +656,23 @@
                 <table class="claims-table results-table-new">
                   <thead>
                     <tr>
-                      <th scope="col">ID Klaim / SEP</th>
-                      <th scope="col">Catatan Dokter</th>
-                      <th scope="col">Tindakan (ICD)</th>
-                      <th scope="col">Tagihan RS</th>
-                      <th scope="col">Tarif Disetujui</th>
-                      <th scope="col">Potensi Hemat</th>
-                      <th scope="col">Tipe Anomali</th>
-                      <th scope="col" class="action-column">AKSI</th>
+                      <th>No. SEP &amp; ID</th>
+                      <th>Pasien &amp; Faskes</th>
+                      <th>Diagnosis &amp; Prosedur</th>
+                      <th>LOS</th>
+                      <th>Nilai Tagihan RS</th>
+                      <th>Tarif INA-CBG</th>
+                      <th>Potensi Hemat</th>
+                      <th>Kategori Fraud</th>
                     </tr>
                   </thead>
                   <tbody id="highImpactTableBody">
-                    <tr><td colspan="8" class="table-message">Memuat klaim prioritas…</td></tr>
+                    <tr><td colspan="8" style="text-align: center; padding: 24px;">Memuat data klaim berisiko tinggi...</td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </section>
-
-
         </main>
 
         <main class="workspace tab-panel hidden assistant-workspace" id="assistantTab">
